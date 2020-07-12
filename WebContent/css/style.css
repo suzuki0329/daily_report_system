@@ -54,6 +54,10 @@ table {
     table-layout: fixed;
 }
 
+select {
+    height: 30px;
+}
+
 th {
     width: 26%;
     padding: 10px 2%;
