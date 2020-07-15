@@ -51,7 +51,7 @@ public class LoginServlet extends HttpServlet {
      */
     // ログイン処理を実行
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 承認結果を格納する変数
+        // 認証結果を格納する変数
         Boolean check_result = false;
 
         String code = request.getParameter("code");
@@ -70,24 +70,25 @@ public class LoginServlet extends HttpServlet {
             // 社員番号とパスワードが正しいかチェックする
             try {
                 e = em.createNamedQuery("checkLoginCodeAndPassword", Employee.class)
-                        .setParameter("code", code)
-                        .setParameter("pass", password)
-                        .getSingleResult();
-            } catch(NoResultException ex) {	}
+                      .setParameter("code", code)
+                      .setParameter("pass", password)
+                      .getSingleResult();
+            } catch(NoResultException ex) {}
 
             em.close();
 
             if(e != null) {
                 check_result = true;
             }
-    }
+        }
+
         if(!check_result) {
             // 認証できなかったらログイン画面に戻る
             request.setAttribute("_token", request.getSession().getId());
             request.setAttribute("hasError", true);
             request.setAttribute("code", code);
 
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-IFN/views/login/login.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/login/login.jsp");
             rd.forward(request, response);
         } else {
             // 認証できたらログイン状態にしてトップページへリダイレクト
@@ -95,9 +96,7 @@ public class LoginServlet extends HttpServlet {
 
             request.getSession().setAttribute("flush", "ログインしました。");
             response.sendRedirect(request.getContextPath() + "/");
-
         }
-
-        }
+    }
 
 }
