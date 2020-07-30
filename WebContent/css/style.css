@@ -151,6 +151,10 @@ table#report_list .report_title {
     width: 37%;
 }
 
+table#report_list .report_like {
+    width: 20%;
+}
+
 table#report_list .report_action {
     width: 13%;
 }

@@ -45,6 +45,7 @@ public class ReportsCreateServlet extends HttpServlet {
 
             r.setEmployee((Employee)request.getSession().getAttribute("login_employee"));
 
+
             Date report_date = new Date(System.currentTimeMillis());
             String rd_str = request.getParameter("report_date");
             if(rd_str != null && !rd_str.equals("")) {
@@ -52,8 +53,12 @@ public class ReportsCreateServlet extends HttpServlet {
             }
             r.setReport_date(report_date);
 
+            // パラメータから画面をもらう
             r.setTitle(request.getParameter("title"));
             r.setContent(request.getParameter("content"));
+
+            // セッターの引数として0を渡す
+            r.setLike_count(0);
 
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             r.setCreated_at(currentTime);
